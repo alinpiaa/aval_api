@@ -7,4 +7,4 @@ module.exports = function createCell(x, y) {
   });
 
   return cell.save();
-}
+};

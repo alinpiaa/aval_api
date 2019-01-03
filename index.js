@@ -2,15 +2,17 @@ const app = require('express')();
 const port = process.env.PORT || 8080;
 const Cell = require('./models/Cell');
 
-const generateField = require('./generateField');
+const generateField = require('./helpers/world/generateField');
+const generateOneFood = require('./helpers/world/generateFood');
 
 app.listen(port, () => {
   shouldGenerateNewField()
     .then((toGenerate) => {
-      if (!toGenerate) return;
-
-      generateField();
-    });
+      if (toGenerate) return generateField();
+    })
+    .then(() => {
+      return generateOneFood();
+    })
 
   console.log(`listening on ${port}`);
 });
@@ -22,7 +24,7 @@ function shouldGenerateNewField() {
 
 app.get('/', (req, res) => {
   Cell.estimatedDocumentCount()
-    .then(count => res.json({ 
+    .then(count => res.json({
       sessionInitialized: true,
       cellsX: Math.sqrt(count),
       cellsY: Math.sqrt(count),
