@@ -3,7 +3,7 @@ const port = process.env.PORT || 8080;
 const Cell = require('./models/Cell');
 
 const generateField = require('./helpers/world/generateField');
-const generateOneFood = require('./helpers/world/generateFood');
+const { generateAllFood } = require('./helpers/world/generateFood');
 
 app.listen(port, () => {
   shouldGenerateNewField()
@@ -11,7 +11,7 @@ app.listen(port, () => {
       if (toGenerate) return generateField();
     })
     .then(() => {
-      return generateOneFood();
+      return generateAllFood();
     })
 
   console.log(`listening on ${port}`);

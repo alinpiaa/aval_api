@@ -1,13 +1,30 @@
 const updateCell = require('../../controllers/cells/updateCell');
 const getRandomCellCoords = require('../math/getRandomCellCoords');
+const { MAX_FOOD_INDEX } = require('../../constants');
 
-function generateOne(){
+function run(promises) {
+  return Promise.all(promises.map(func => func()))
+    .then(() => console.info('All food generated!'))
+    .catch(err => console.error(err));
+}
+
+// TODO: to fix unpredictable amount in case of random coords duplication
+function generateOneFood() {
   const coords = getRandomCellCoords();
   return updateCell(coords, { food: true });
 }
 
-// TODO: implement
-// function generateMany(){
-// }
+function generateAllFood() {
+  let promises = [];
 
-module.exports = generateOne;
+  for (let i=0; i<=MAX_FOOD_INDEX; i++) {
+    promises.push(() => generateOneFood());
+  }
+
+  return run(promises);
+}
+
+module.exports = {
+  generateOneFood,
+  generateAllFood,
+};
