@@ -1,4 +1,4 @@
-const updateCell = require('../../controllers/cells/updateCell');
+const updateCell = require('../../controllers/cells/base/updateCell');
 const getRandomCellCoords = require('../math/getRandomCellCoords');
 const { MAX_FOOD_INDEX } = require('../../constants');
 

@@ -23,11 +23,17 @@ function shouldGenerateNewField() {
 }
 
 app.get('/', (req, res) => {
-  Cell.estimatedDocumentCount()
-    .then(count => res.json({
-      sessionInitialized: true,
-      cellsX: Math.sqrt(count),
-      cellsY: Math.sqrt(count),
-    }))
-    .catch(err => console.error(err));
+  Cell.find({}).select('-_id -__v').exec()
+    .then((cells) => {
+      const sideLength = Math.sqrt(cells.length);
+      
+      return res.json({
+        // TODO: handle if not
+        sessionInitialized: true,
+        cellsX: sideLength,
+        cellsY: sideLength,
+        cells,
+      });
+    })
+  .catch(err => console.error(err));
 });

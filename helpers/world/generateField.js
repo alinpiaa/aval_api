@@ -1,4 +1,4 @@
-const createCell = require('../../controllers/cells/createCell');
+const createCell = require('../../controllers/cells/base/createCell');
 const { MAX_RAW_INDEX, MAX_COLUMN_INDEX } = require('../../constants');
 
 // TODO: to extract to helper
